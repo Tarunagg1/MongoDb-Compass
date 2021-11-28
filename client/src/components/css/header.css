@@ -1,0 +1,19 @@
+.header{
+    background-color: black;
+    width: 100%;
+    height: 4vh;
+}
+
+.header ul{
+    list-style-type: none;
+    color: white;
+    display: flex;
+}
+
+.header ul li{
+    margin-right: 15px;
+    font-size: 15px;
+    padding: 5px;
+    cursor: pointer;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

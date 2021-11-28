@@ -1,0 +1,26 @@
+.sidebar{
+    height: 96vh;
+    width: 15%;
+    background-color: rgb(76,82,89);
+}
+
+.sidebar .menu .tab{
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+.sidebar .menu .tab i{
+    margin-left: 18px;
+}
+.sidebar .menu{
+    padding-top: 15px;
+}
+.sidebar .menu .tab{
+    width: 100%;
+    margin-top: 15px;
+    cursor: pointer;
+}
+.sidebar .menu .tab span{
+    margin-left: 20px;
+    font-weight: bold;
+}
