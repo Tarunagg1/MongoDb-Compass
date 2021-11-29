@@ -14,7 +14,7 @@ export default function RightSidebar() {
             <div className="main">
                 <p className="newString">New Connection</p>
                 <div className="box">
-                    <p className="insideStrng">Click edit to modify your connection string (SRV or Standard )</p>
+                    <p className="insideStrng">Click edit to modify your connection string (SRV or Standard ) | Please click on connect</p>
                     <input type="text" placeholder="eg. mongodb+srv://username:password@cluster()-jtpsd.mongodb.net/admin" />
                     <button onClick={moveToDashboard}>Connect</button>
                 </div>

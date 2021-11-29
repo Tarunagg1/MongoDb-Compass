@@ -22,7 +22,9 @@ export const getData = () => {
             dispatch({ type: GET_DATA, payload: resp })
 
         } catch (error) {
-            dispatch({ type: GET_DATA_ERROR, payload: error.response.data.message })
+            if (error.response) {
+                dispatch({ type: GET_DATA_ERROR, payload: error.response.data.message })
+            }
         }
 
     }
@@ -36,7 +38,24 @@ export const addDataAction = (userData) => {
             dispatch(getData());
             toast.success("Data inserted successfully")
         } catch (error) {
-            toast.error(error.response.data.message);
+            if (error.response) {
+                toast.error(error.response.data.message);
+            }
+        }
+
+    }
+}
+
+export const importJson = (userData) => {
+    return async (dispatch) => {
+        try {
+            await axiosinstance.post(`/importJson`, userData);
+            dispatch(getData());
+            toast.success("Data inserted successfully")
+        } catch (error) {
+            if (error.response) {
+                toast.error(error.response.data.message);
+            }
         }
 
     }
@@ -50,7 +69,9 @@ export const deleteDataAction = (id) => {
             dispatch({ type: DELETE_DATA, payload: id })
             toast.success("Data deleted")
         } catch (error) {
-            toast.error(error.response.data.message);
+            if (error.response) {
+                toast.error(error.response.data.message);
+            }
         }
 
     }
@@ -64,7 +85,9 @@ export const updateDataAction = (id, User) => {
             dispatch(getData());
             toast.success("Data Updated")
         } catch (error) {
-            toast.error(error.response.data.message);
+            if (error.response) {
+                toast.error(error.response.data.message);
+            }
         }
 
     }

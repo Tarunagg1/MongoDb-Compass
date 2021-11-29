@@ -4,6 +4,7 @@ import './css/dashboard.css';
 import { getData, deleteDataAction, exportToCSV, addDataAction, updateDataAction } from '../action/data.action';
 import { useDispatch, useSelector } from 'react-redux';
 import ModelPopup from '../container/Model';
+import { toast } from 'react-toastify';
 
 
 
@@ -16,10 +17,17 @@ export default function Dashboard() {
     const [inputFields, setinputFields] = useState([])
 
     const [open, setOpen] = React.useState(false);
+    const [open1, setOpen1] = React.useState(false);
+    const [fileType, setFileType] = useState("");
+    const [File, setFile] = useState(null);
 
 
     const toggleModal = () => {
         setOpen((val) => !val);
+    };
+
+    const toggleModal1 = () => {
+        setOpen1((val) => !val);
     };
 
 
@@ -90,6 +98,25 @@ export default function Dashboard() {
         dispatch(deleteDataAction(id));
     }
 
+    const uploadFile = (e) => {
+        console.log(e.target.files);
+        setFile(e.target.files[0]);
+    }
+
+    const submitFileDb = () => {
+        if (!File) {
+            toast.error('Please upload file');
+        }
+        else if (fileType === "") {
+            toast.error('Select File format');
+            return;
+        } else {
+            const form = new FormData();
+            form.append('file', File);
+            form.append('type', fileType);
+        }
+    }
+
     // Edit Update model code
     const returnModel = () => {
         return (
@@ -118,13 +145,44 @@ export default function Dashboard() {
         )
     }
 
+
     // Import file code
+    const returnUploaModel = () => {
+        return (
+            <ModelPopup open={open1} toggleModal={toggleModal1}>
+                <div className="model-container">
+                    <div className="container">
+                        <div className="form-group">
+                            <input onChange={uploadFile} type="file" className="fileUpload" placeholder="Select file" name="file" />
+                        </div>
+
+                        <div className="form-block">
+                            <p>Select File Type</p>
+                            <div className="blockmain">
+                                <button onClick={() => setFileType("json")} className="block">
+                                    <span>Json</span>
+                                </button>
+                                <button onClick={() => setFileType("csv")} className="block">
+                                    <span>Csv</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="footer">
+                        <button onClick={submitFileDb}>Import</button>
+                    </div>
+                </div>
+            </ModelPopup>
+        )
+    }
+
 
     return (
         <div className="dashboard">
             <LeftSidebar />
             <div className="dashboardmain">
                 {returnModel()}
+                {returnUploaModel()}
                 <div className="dashboardheader">
                     <div className="top">
                         <div className="left">
@@ -151,7 +209,7 @@ export default function Dashboard() {
                             <button onClick={toggleTab} className="adddata"><i className="fas fa-download"></i> Add Data <i className="fas fa-sort-down"></i></button>
                             <div className={`listadddata ${dataTab ? "" : "hidden"}`}>
                                 <ul>
-                                    <li onClick={() => modelOpen(null, "insertField")}>Import File</li>
+                                    <li onClick={toggleModal1}>Import File</li>
                                     <li onClick={() => modelOpen(null, "insertField")}>Insert Document</li>
                                 </ul>
                             </div>

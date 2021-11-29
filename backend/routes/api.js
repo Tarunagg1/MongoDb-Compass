@@ -38,10 +38,32 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-// Import database
-router.get('/import', (req, res) => {
-    return res.send('ijhy');
+// Import Csv
+router.post('/imprtJson', async (req, res) => {
+    try {
+        const collection = await db();
+        const resp = await collection.insertMany(req.body);
+        return res.status(201).json({ message: "user created", status: true, resp });
+    } catch (error) {
+        return res.status(400).json({ message: error.message, status: false });
+    }
 })
+// Import Json
+
+router.post('/importCsv', async (req, res) => {
+    let resultArr = [];
+    fs.createReadStream('data.csv')
+        .pipe(csv())
+        .on('data', (data) => results.push(data))
+        .on('end', () => {
+            // console.log(results);
+            resultArr = results;
+        });
+    const collection = await db();
+    const resp = await collection.insertMany(results);
+    return res.status(201).json({ message: "user created", status: true, resp });
+})
+
 
 
 // get Database

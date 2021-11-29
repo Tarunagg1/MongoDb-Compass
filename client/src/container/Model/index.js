@@ -11,7 +11,6 @@ export default function ModelPopup(props) {
 
     return (
         <div style={styles}>
-            <h2>react-responsive-modal</h2>
             <Modal open={props.open} onClose={props.toggleModal}>
                 {props.children}
             </Modal>
